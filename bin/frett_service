@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+#
+#  Created on 2012-6-27.
+#  Copyright (c) 2012. All rights reserved.
+
+require 'rubygems'
+require "daemons"
+require File.expand_path(File.dirname(__FILE__) + "/../lib/frett")
+require File.expand_path(File.dirname(__FILE__) + "/../lib/frett/config")
+
+Frett::Config.load_config(Dir.pwd)
+
+Daemons.run_proc("frett_service", 
+  :log_dir => Frett::Config.index_path,
+  :ARGV => ARGV << File.expand_path(Dir.pwd),
+  :log_output => Frett::Config.log) do
+    dir = ARGV.last
+    # (re)index
+    Frett::Indexer.new.index!
+
+    # listen for file changes
+    Frett::Listener.new
+end
