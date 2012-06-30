@@ -8,6 +8,7 @@ class Frett::Config
         :directory => ".frett",
         :log => true,
         :consider_mtime => true,
+        :service_name => "frett_service",
         :search => {
           :use_wildcard => false,
           :escape => true,

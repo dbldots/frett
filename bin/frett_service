@@ -10,7 +10,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/frett/config")
 
 Frett::Config.load_config(Dir.pwd)
 
-Daemons.run_proc("frett_service", 
+Daemons.run_proc(Frett::Config.service_name,
   :log_dir => Frett::Config.index_path,
   :ARGV => ARGV << File.expand_path(Dir.pwd),
   :log_output => Frett::Config.log) do
