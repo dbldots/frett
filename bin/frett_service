@@ -12,11 +12,10 @@ Frett::Config.load_config(Dir.pwd)
 
 Daemons.run_proc(Frett::Config.service_name,
   :log_dir => Frett::Config.index_path,
-  :ARGV => ARGV << File.expand_path(Dir.pwd),
+  :ARGV => ARGV,
   :log_output => Frett::Config.log) do
-    dir = ARGV.last
     # (re)index
-    Frett::Indexer.new.index!
+    Frett::Indexer.new(:clean => (ARGV.last == 'clean')).index!
 
     # listen for file changes
     Frett::Listener.new

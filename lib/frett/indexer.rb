@@ -3,6 +3,10 @@ require 'mime/types'
 
 class Frett::Indexer
 
+  def initialize(options = {})
+    @options = options
+  end
+
   def index!
     adapter.writer_index do |index|
       Dir.glob(File.join(Frett::Config.working_dir, "**/*"), File::FNM_CASEFOLD) do |filename|
@@ -79,6 +83,6 @@ class Frett::Indexer
   end
 
   def adapter
-    @adapter ||= Frett::Adapter.new
+    @adapter ||= Frett::Adapter.new(@options)
   end
 end
