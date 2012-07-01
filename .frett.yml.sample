@@ -1,0 +1,33 @@
+# these are the default config values..
+
+# to enable/disable logging of the frett_service
+:log: true
+
+# regex to match directories or files that shouldn't be indexed
+:exclude: ^tags$|log/|tmp/
+
+# max results fetched from the index
+:num_docs: 100000
+
+# directory where the index (and the log file) is written to
+:directory: .frett
+
+# if this is set to 'false' the index will be build from scratch
+# every time you start the frett_service
+:consider_mtime: true
+
+# name used for the service pid file and the logfile
+:service_name: frett_service
+
+:search:
+  # adds a '*' in front & to the end of your search string
+  :use_wildcard: false
+
+  # build search query using AND instead of OR for the terms of your search string
+  # only if escaping is disabled
+  :use_or: false
+
+  # escape special chars per default
+  # see http://paperc.de/7688-ferret-9780596522544#!/pages/53
+  # [' ', '\\','&','(',')','[',']','{','}','!','"','~','^','|','<','>','=','*','?','+','-']
+  :escape: true

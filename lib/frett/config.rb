@@ -19,6 +19,7 @@ class Frett::Config
 
     def load_config(working_dir)
       @options = default_options.merge(:working_dir => working_dir)
+      @options.merge!(YAML.load(File.read(self.config_path))) if File.exists?(self.config_path)
     end
 
     def index_path
@@ -27,6 +28,10 @@ class Frett::Config
 
     def mtime_path
       File.join(index_path, 'mtime')
+    end
+
+    def config_path
+      File.join(File.expand_path(self.working_dir), '.frett.yml')
     end
 
     def method_missing(meth, *args, &block)
