@@ -14,9 +14,5 @@ Daemons.run_proc(Frett::Config.service_name,
   :log_dir => Frett::Config.index_path,
   :ARGV => ARGV,
   :log_output => Frett::Config.log) do
-    # (re)index
-    Frett::Indexer.new(:clean => (ARGV.last == 'clean')).index!
-
-    # listen for file changes
-    Frett::Listener.new
+    Frett::Indexer.new(:clean => (ARGV.last == 'clean'))
 end

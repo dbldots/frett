@@ -1,3 +1,4 @@
+require 'listen'
 require 'ptools'
 require 'mime/types'
 
@@ -5,10 +6,25 @@ class Frett::Indexer
 
   def initialize(options = {})
     @options = options
+    index!
+
+    ::Listen.to(Frett::Config.working_dir) do |modified, added, removed|
+      modified.each do |filename|
+        update_file(filename)
+      end
+
+      added.each do |filename|
+        update_file(filename)
+      end
+
+      removed.each do |filename|
+        remove_file(filename)
+      end
+    end
   end
 
   def index!
-    adapter.writer_index do |index|
+    adapter.write do |index|
       Dir.glob(File.join(Frett::Config.working_dir, "**/*"), File::FNM_CASEFOLD) do |filename|
         if process?(filename) && needs_index?(filename)
           index_file(index, filename)
@@ -19,15 +35,14 @@ class Frett::Indexer
 
   def remove_file(filename)
     return if filename.include?(Frett::Config.directory)
-    adapter.reader_index do |index|
+    adapter.write do |index|
       remove_from_index(index, filename)
-      index.flush
     end
   end
 
   def update_file(filename)
     return unless process?(filename)
-    adapter.writer_index do |index|
+    adapter.write do |index|
       remove_from_index(index, filename)
       index_file(index, filename)
     end
@@ -53,9 +68,9 @@ class Frett::Indexer
 
   def remove_from_index(index, filename)
     query = Ferret::Search::PrefixQuery.new(:file, filename)
-    puts "DELETE #{filename}"
-    index.scan(query, :limit => Frett::Config.num_docs).each do |doc_id|
-      puts "deleting.. #{doc_id}"
+    doc_ids = index.scan(query, :limit => Frett::Config.num_docs)
+    puts "DELETE #{doc_ids.size} entries for #{filename}"
+    doc_ids.each do |doc_id|
       index.delete(doc_id)
     end
   end

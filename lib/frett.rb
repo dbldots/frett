@@ -6,6 +6,6 @@ module Frett
 end
 
 require 'rubygems'
-%w(config adapter listener cli indexer search).each do |file|
+%w(config adapter cli indexer search).each do |file|
   require File.join(File.expand_path(File.dirname(__FILE__)), "frett", file)
 end

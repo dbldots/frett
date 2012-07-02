@@ -7,7 +7,7 @@ class Frett::Search
 
   def search(needle)
     results = []
-    adapter.reader_index do |index|
+    adapter.read do |index|
       index.search_each(build_query(needle), :limit => Frett::Config.num_docs) do |doc_id, score|
         results.push result_line(index[doc_id])
       end
