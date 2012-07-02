@@ -9,7 +9,6 @@ lib/frett/adapter.rb
 lib/frett/cli.rb
 lib/frett/config.rb
 lib/frett/indexer.rb
-lib/frett/listener.rb
 lib/frett/search.rb
 script/console
 test/test_frett.rb

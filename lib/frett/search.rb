@@ -9,22 +9,20 @@ class Frett::Search
     results = []
     adapter.read do |index|
       index.search_each(build_query(needle), :limit => Frett::Config.num_docs) do |doc_id, score|
-        results.push result_line(index[doc_id])
+        results.push result(index[doc_id])
       end
     end
 
-    puts results.size == 1 ? "1 match" : "#{results.size} matches"
-    results.each do |result|
-      puts result
-    end
+    puts ( results.size == 1 ? "1 match" : "#{results.size} matches" ).white
+    results.flatten.map { |result_line| puts result_line }
   end
 
   private
 
-  def result_line(doc)
+  def result(doc)
     file = doc[:file].gsub!(File.join(Frett::Config.working_dir,"/"), '')
-    content = ( doc[:content].length > 80 ) ? ( doc[:content][0..77] + "..." ) : doc[:content]
-    "#{file}:#{doc[:line]} #{content}"
+    content = ( doc[:content].length > 200 ) ? ( doc[:content][0..77] + "..." ) : doc[:content]
+    ["", file.light_yellow, "#{doc[:line]}: #{content.light_blue}"]
   end
 
   def adapter
@@ -45,3 +43,4 @@ class Frett::Search
     needle
   end
 end
+# foobar

@@ -15,6 +15,7 @@ $hoe = Hoe.spec 'frett' do
     ['ferret','>= 0.11.8.4'],
     ['listen','>= 0.4.7'],
     ['ptools','>= 1.2.2'],
+    ['colorize','>= 0.5.8'],
     ['mime-types','>= 1.19']
   ]
 

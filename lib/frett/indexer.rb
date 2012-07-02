@@ -1,6 +1,7 @@
 require 'listen'
 require 'ptools'
 require 'mime/types'
+require 'colorize'
 
 class Frett::Indexer
 
@@ -51,7 +52,7 @@ class Frett::Indexer
   private
 
   def index_file(index, filename)
-    puts "INDEX #{filename}"
+    puts "INDEX #{filename}".green
     file = File.new(filename, 'r')
     line = 1
     now = Time.now.to_i
@@ -69,7 +70,7 @@ class Frett::Indexer
   def remove_from_index(index, filename)
     query = Ferret::Search::PrefixQuery.new(:file, filename)
     doc_ids = index.scan(query, :limit => Frett::Config.num_docs)
-    puts "DELETE #{doc_ids.size} entries for #{filename}"
+    puts "DELETE #{doc_ids.size} entries for #{filename}".red
     doc_ids.each do |doc_id|
       index.delete(doc_id)
     end
