@@ -10,7 +10,6 @@ Hoe.plugin :newgem
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 $hoe = Hoe.spec 'frett' do
   self.developer 'johannes-kostas goetzinger', 'dbldots@gmail.com'
-  self.rubyforge_name       = self.name
   self.extra_deps           = [
     ['daemons','>= 1.1.8'],
     ['ferret','>= 0.11.8.4'],
