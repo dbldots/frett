@@ -20,7 +20,7 @@ class Frett::Adapter
     index.close
   end
 
-  def writer_index(update = false, options = {}, &block)
+  def writer_index(&block)
     index = Ferret::Index::Index.new(:path => Frett::Config.index_path)
     worker = Proc.new(&block)
     worker.call(index)

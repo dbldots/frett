@@ -27,7 +27,7 @@ class Frett::Indexer
 
   def update_file(filename)
     return unless process?(filename)
-    adapter.writer_index(true) do |index|
+    adapter.writer_index do |index|
       remove_from_index(index, filename)
       index_file(index, filename)
     end
@@ -55,6 +55,7 @@ class Frett::Indexer
     query = Ferret::Search::PrefixQuery.new(:file, filename)
     puts "DELETE #{filename}"
     index.scan(query, :limit => Frett::Config.num_docs).each do |doc_id|
+      puts "deleting.. #{doc_id}"
       index.delete(doc_id)
     end
   end
