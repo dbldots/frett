@@ -19,6 +19,7 @@
 # name used for the service pid file and the logfile
 :service_name: frett_service
 
+# these options may be overwritten by command line arguments for frett
 :search:
   # adds a '*' in front & to the end of your search string
   :use_wildcard: false
