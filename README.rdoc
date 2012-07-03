@@ -11,7 +11,7 @@ it's built on top of the 'ferret' and 'listen' gems.
 
 * files changes are not tracked until the initial index has been build
 
-== SYNOPSIS:
+== USAGE:
 
 go to any folder you want to index for searching. then hit
 * 'frett_service start' or
@@ -20,6 +20,10 @@ go to any folder you want to index for searching. then hit
 
 start your search using 'frett'. see
 * 'frett -h' for usage instructions
+
+== CONFIGURATION:
+
+put a .frett.yml file in the project root folder. see the .frett.sample.yml for options.
 
 == REQUIREMENTS:
 
@@ -33,7 +37,7 @@ frett uses the 'listen' gem. should work out of the box on any platform. (except
 
 (The MIT License)
 
-Copyright (c) 2012 FIXME full name
+Copyright (c) 2012 johannes-kostas goetzinger
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
