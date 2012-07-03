@@ -21,8 +21,13 @@ class Frett::Search
 
   def result(doc)
     file = doc[:file].gsub!(File.join(Frett::Config.working_dir,"/"), '')
+    line = doc[:line]
     content = ( doc[:content].length > 200 ) ? ( doc[:content][0..77] + "..." ) : doc[:content]
-    ["", file.light_yellow, "#{doc[:line]}: #{content.light_blue}"]
+    if @options[:vim]
+      "#{file}:#{line}:#{content}"
+    else
+      ["", file.light_yellow, "#{line}: #{content.light_blue}"]
+    end
   end
 
   def adapter

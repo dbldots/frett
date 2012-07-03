@@ -35,6 +35,11 @@ module Frett
           options[:use_or] = false
         end
 
+        options[:vim] = nil
+        opts.on( '-v', '--vim', 'produces output that can be populated into the vim quickfix buffer' ) do
+          options[:vim] = true
+        end
+
         opts.on( '-h', '--help', 'Display this screen' ) do
           puts opts
           exit
