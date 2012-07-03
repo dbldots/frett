@@ -4,9 +4,10 @@ module Frett
   class CLI
     def self.execute(stdout, arguments=[])
       options = {}
+      banner = "Usage: frett [options] 'search string' [directory path]"
 
       optparse = OptionParser.new do|opts|
-        opts.banner = "Usage: frett [options] 'search string'"
+        opts.banner = banner
 
         options[:escape] = nil
         opts.on( '-n', '--escape', 'escape special characters' ) do
@@ -42,10 +43,17 @@ module Frett
 
       optparse.parse!(arguments)
       search_options = options.inject({}) { |hsh, (key, value)| value.nil? ? hsh : hsh.merge(key => value) }
+      path = File.join(Frett::Config.working_dir, arguments.last) if arguments.size > 1
+      arguments.pop if path && File.exist?(path)
       needle = arguments.join(" ")
 
       puts "WARNING: frett_service is NOT running..".red unless File.exist?(File.join(Frett::Config.working_dir, Frett::Config.service_name << ".pid"))
-      Frett::Search.new(search_options).search(needle)
+
+      if needle.strip.empty?
+        puts banner
+      else
+        Frett::Search.new(search_options).search(needle, path)
+      end
     end
   end
 end
