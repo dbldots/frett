@@ -1,26 +1,33 @@
 = frett
 
-* http://github.com/#{github_username}/#{project_name}
+* http://github.com/dbldots/frett
 
 == DESCRIPTION:
 
-FIX (describe your package)
+the goal of frett is to provide a much quicker search functionality than ack on large projects.
+it's built on top of the 'ferret' and 'listen' gems.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* files changes are not tracked until the initial index has been build
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+go to any folder you want to index for searching. then hit
+* 'frett_service start' or
+* 'frett_service start clean' to ensure the index is build from scratch
+* 'frett_service status' 
+
+start your search using 'frett'. see
+* 'frett -h' for usage instructions
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+frett uses the 'listen' gem. should work out of the box on any platform. (except windows?)
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* gem install frett
 
 == LICENSE:
 
