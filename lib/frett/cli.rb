@@ -43,6 +43,8 @@ module Frett
       optparse.parse!(arguments)
       search_options = options.inject({}) { |hsh, (key, value)| value.nil? ? hsh : hsh.merge(key => value) }
       needle = arguments.join(" ")
+
+      puts "WARNING: frett_service is NOT running..".red unless File.exist?(File.join(Frett::Config.working_dir, Frett::Config.service_name << ".pid"))
       Frett::Search.new(search_options).search(needle)
     end
   end
