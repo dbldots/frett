@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.dirname(__FILE__) + "/../lib/frett")
+require File.expand_path(File.dirname(__FILE__) + "/../lib/frett/config")
+
+Frett::Config.instance.init!(Dir.pwd)
+
+Frett::CLI.execute(STDOUT, ARGV)
