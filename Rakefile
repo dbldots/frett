@@ -1,25 +1,46 @@
+# encoding: utf-8
+
 require 'rubygems'
-gem 'hoe', '>= 2.1.0'
-require 'hoe'
-require 'fileutils'
-require './lib/frett'
+require 'bundler'
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+require 'rake'
 
-Hoe.plugin :newgem
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.name = "frett"
+  gem.homepage = "http://github.com/dbldots/frett"
+  gem.license = "WTFPL"
+  gem.summary = %Q{search engine for local files}
+  gem.description = <<DESC
+frett is a search engine for local files. once your project gets very large, even great
+tools like ack or silver searcher need some time to complete their job. if you hate waiting
+for search results you might want to try out frett.
+DESC
+  gem.email = "dbldots@gmail.com"
+  gem.authors = ["Johannes-Kostas Goetzinger"]
+  # dependencies defined in Gemfile
+end
+Jeweler::RubygemsDotOrgTasks.new
 
-# Generate all the Rake tasks
-# Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.spec 'frett' do
-  self.developer 'johannes-kostas goetzinger', 'dbldots@gmail.com'
-  self.extra_deps           = [
-    ['daemons','>= 1.1.8'],
-    ['ferret','>= 0.11.8.4'],
-    ['listen','>= 0.4.7'],
-    ['ptools','>= 1.2.2'],
-    ['colorize','>= 0.5.8'],
-    ['mime-types','>= 1.19']
-  ]
-
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-require 'newgem/tasks'
-Dir['tasks/**/*.rake'].each { |t| load t }
+RSpec::Core::RakeTask.new(:rcov) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
+end
+
+task :default => :spec
+
+require 'yard'
+YARD::Rake::YardocTask.new

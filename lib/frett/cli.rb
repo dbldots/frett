@@ -48,11 +48,11 @@ module Frett
 
       optparse.parse!(arguments)
       search_options = options.inject({}) { |hsh, (key, value)| value.nil? ? hsh : hsh.merge(key => value) }
-      path = File.join(Frett::Config.working_dir, arguments.last) if arguments.size > 1
+      path = File.join(Frett::Config.instance.pwd, arguments.last) if arguments.size > 1
       arguments.pop if path && File.exist?(path)
       needle = arguments.join(" ")
 
-      puts "WARNING: frett_service is NOT running..".red unless File.exist?(File.join(Frett::Config.working_dir, Frett::Config.service_name << ".pid"))
+      puts "WARNING: frett_service is NOT running..".red unless File.exist?(File.join(Frett::Config.instance.pwd, Frett2::Config.instance.options.service_name << ".pid"))
 
       if needle.strip.empty?
         puts banner

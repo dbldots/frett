@@ -8,11 +8,17 @@ require "daemons"
 require File.expand_path(File.dirname(__FILE__) + "/../lib/frett")
 require File.expand_path(File.dirname(__FILE__) + "/../lib/frett/config")
 
-Frett::Config.load_config(Dir.pwd)
+Frett::Config.instance.init!(Dir.pwd)
 
-Daemons.run_proc(Frett::Config.service_name,
-  :log_dir => Frett::Config.index_path,
+Daemons.run_proc(
+  Frett::Config.instance.options.service_name,
+  :log_dir => Frett::Config.instance.data_dir,
   :ARGV => ARGV,
-  :log_output => Frett::Config.log) do
-    Frett::Indexer.new(:clean => (ARGV.last == 'clean'))
+  :log_output => true,
+  :backtrace => true,
+  :stop_proc => Proc.new {
+    Frett::Adapter::Writer.stop_sphinx
+  }
+) do
+  Frett::Indexer.new(:clean => (ARGV.last == 'clean'))
 end
