@@ -52,7 +52,9 @@ module Frett
       arguments.pop if path && File.exist?(path)
       needle = arguments.join(" ")
 
-      puts "WARNING: frett_service is NOT running..".red unless File.exist?(File.join(Frett::Config.instance.pwd, Frett2::Config.instance.options.service_name << ".pid"))
+      unless File.exist?(File.join(Frett::Config.instance.pwd, Frett::Config.instance.options.service_name << ".pid"))
+        puts "WARNING: frett_service is NOT running..".red
+      end
 
       if needle.strip.empty?
         puts banner
