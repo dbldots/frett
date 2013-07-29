@@ -5,29 +5,37 @@
 
 Gem::Specification.new do |s|
   s.name = "frett"
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Johannes-Kostas Goetzinger"]
   s.date = "2013-07-29"
   s.description = "frett is a search engine for local files. once your project gets very large, even great\ntools like ack or silver searcher need some time to complete their job. if you hate waiting\nfor search results you might want to try out frett.\n"
   s.email = "dbldots@gmail.com"
-  s.executables = ["frett2", "frett2_service"]
+  s.executables = ["frett", "frett_service"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
-    ".document",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
-    "script/console",
-    "test/helper.rb",
-    "test/test_frett2.rb"
+    "bin/frett",
+    "bin/frett_service",
+    "frett.gemspec",
+    "lib/frett.rb",
+    "lib/frett/adapter/base.rb",
+    "lib/frett/adapter/reader.rb",
+    "lib/frett/adapter/writer.rb",
+    "lib/frett/cli.rb",
+    "lib/frett/config.rb",
+    "lib/frett/indexer.rb",
+    "lib/frett/search.rb",
+    "script/console"
   ]
   s.homepage = "http://github.com/dbldots/frett"
   s.licenses = ["WTFPL"]
@@ -47,7 +55,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<mime-types>, [">= 0"])
       s.add_runtime_dependency(%q<hashery>, [">= 0"])
       s.add_runtime_dependency(%q<open4>, [">= 0"])
-      s.add_runtime_dependency(%q<city_hash>, [">= 0"])
       s.add_development_dependency(%q<debugger>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<assert_difference>, [">= 0"])
@@ -66,7 +73,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<mime-types>, [">= 0"])
       s.add_dependency(%q<hashery>, [">= 0"])
       s.add_dependency(%q<open4>, [">= 0"])
-      s.add_dependency(%q<city_hash>, [">= 0"])
       s.add_dependency(%q<debugger>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<assert_difference>, [">= 0"])
@@ -86,7 +92,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<mime-types>, [">= 0"])
     s.add_dependency(%q<hashery>, [">= 0"])
     s.add_dependency(%q<open4>, [">= 0"])
-    s.add_dependency(%q<city_hash>, [">= 0"])
     s.add_dependency(%q<debugger>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<assert_difference>, [">= 0"])
